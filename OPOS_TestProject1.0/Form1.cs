@@ -54,17 +54,67 @@ namespace OPOS_TestProject1._0
         int returnCode_close;
 
         String resultCodeString, returnCodeString;
-        String printText;
 
         int device_num = 1;
         String track1, track2, track3;
+        String defualtReciptText =
+                "매출전표(고객용)\n" +
+                "우리 체크                    신용승인\n" +
+                "거래일시               16-11-10 10:56\n" +
+                "카드 번호      6275-****-****-****(S)\n" +
+                "가맹점 번호                 123456789\n" +
+                "승인번호                         9876\n" +
+                "매입사:비씨  (전자서명전표)          \n" +
+                "-------------------------------------\n" +
+                "판매금액                     92,728원\n" +
+                "부가가치세                    9,272원\n" +
+                "봉사료                            0원\n" +
+                "합  계                      102,000원\n" +
+                "-------------------------------------\n" +
+                "가맹점명                 OPOS프로젝트\n" +
+                "사업자번호               201611101056\n" +
+                "대표자명:홍길동     TEL:010-1234-5678\n" +
+                "주소:서울시 동대문구                 \n" +
+                "-------------------------------------\n" +
+                "CATID:20161110    전표No:201611101056\n" +
+                "감사합니다.                          \n" +
+            "잘 지내고 있어요. 당신은요?挺好的。您呢？  반복Tǐng hǎo de.Nín ne？팅 하오 더.닌 너?저도 잘 지내고 있어요.我也很好。  반복Wǒ yě hěn hǎo워 예 헌 하오만나서 반가웠어요.다음에 또 만나요.见到您很高兴，再见。  반복Jiàndào nín hěn gāoxìng，zàijiàn젠따오 닌 헌 까오싱, 짜이젠네, 그럼 안녕히 가세요.好的，再见。  반복Hǎo de，zàijiàn하오 더, 짜이젠==================J===================안녕하세요. (점심)こんにちは。  반복곤니찌와안녕하세요. (점심)こんにちは。  반복곤니찌와어떻게 지내세요?どうお過すごしですか。  반복도- 오스고시데스카?잘 지내고 있어요.당신은요?元気げんきです。あなたは？  반복겐키데스. 아나타와?저도 잘 지내고 있어요.私わたしも元気げんきです。  반복와타시모 겐키데스만나서 반가웠어요.다음에 또 만나요.お会あいできて、うれしかったです。また、会あいましょう。  반복오아이데키테 우레시캇타데스.마타 아이마쇼-네, 그럼 안녕히 가세요.はい、お気きをつけて。  반복하이, 오키오츠케테=====================V==================안녕하세요.Xin chào.  반복씬 짜오안녕하세요. 만나서 반가워요.Chào chị, rất vui được gặp chị.반복짜오 찌, 젓 부이 드억 갑 찌어떻게 지내세요?Dạo này anh thế nào?  반복자오 나이 아잉 테 나오?잘 지내고 있어요.당신은요?Tôi bình thường. Còn anh?  반복또이 빙 트엉. 꼰 아잉?저도 잘 지내고 있어요.Tôi cũng khỏe.반복또이 꿍 쾌만나서 반가웠어요. 다음에 또 만나요.Rất vui được gặp chị.Hẹn gặp lại nhé.  반복젓 부이 드억 갑 찌. 헨 갑 라이 녜네, 그럼 안녕히 가세요.Vâng, anh đi ạ.반복벙, 아잉 디 아===========================================";
 
-        
+        String printText = "";
+
+        Boolean isDefaultText = true;
+
 
         public Form1()
         {
             InitializeComponent();
             init_visible();
+            StringToUTF8();
+        }
+
+        private void StringToUTF8()
+        {
+            string sample = "테스트";
+            //인코딩 방식을 지정
+            System.Text.Encoding utf8 = System.Text.Encoding.UTF8;
+            //변환하고자 하는 문자열을 UTF8 방식으로 변환하여 byte 배열로 반환
+            byte[] utf8Bytes = utf8.GetBytes(defualtReciptText);
+
+            //UTF-8을 string으로 변한
+            string utf8String = "";
+            //Console.Write(" - Encode: ");
+            foreach (byte b in utf8Bytes)
+            {
+                utf8String += "%" + String.Format("{0:X}", b);
+            }
+            //Console.WriteLine(utf8String);
+
+
+            // 인코된 문자열 디코딩
+            string Unicode = utf8.GetString(utf8Bytes);
+            //Console.WriteLine(" - Decode: " + Unicode);
+
+            defualtReciptText = Unicode;
         }
 
         private void init_visible()
@@ -87,6 +137,7 @@ namespace OPOS_TestProject1._0
             ldn_cb.SelectedIndex = 0;
 
             repeatNum_tb.MaxLength = 4;
+            repeatNum_tb.Text = "1";
         }
 
         private void ptr_btn_Click(object sender, EventArgs e)
@@ -166,9 +217,16 @@ namespace OPOS_TestProject1._0
             switch (device_num)
             {
                 case PTR_NUM:
-                    {
-                        //for(int i=0;i<repeatNum_tb.Text)
-                        int ret = axOPOSPOSPrinter1.PrintNormal(PTR_S_RECEIPT, printText);
+                    {                  
+                        int repeatNum = int.Parse(repeatNum_tb.Text);
+                        if(isDefaultText)
+                        {
+                            printText = defualtReciptText;
+                        }
+                        for (int i = 0; i < repeatNum; i++)
+                        {
+                            int ret = axOPOSPOSPrinter1.PrintNormal(PTR_S_RECEIPT, printText);
+                        }
 
                         axOPOSPOSPrinter1.CutPaper(PTR_CP_FULLCUT);
                     }
@@ -248,6 +306,8 @@ namespace OPOS_TestProject1._0
 
         private void openfile_btn_Click(object sender, EventArgs e)
         {
+            isDefaultText = false;
+            test_btn.Text = "OPEN FILE TEXT TEST";
             if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 System.IO.StreamReader sr = new System.IO.StreamReader(openFileDialog1.FileName, System.Text.Encoding.UTF8, true);
@@ -263,6 +323,12 @@ namespace OPOS_TestProject1._0
             if (e.KeyChar == '\b') return;
             //숫자 이외의 값 허용 안함
             if (!char.IsDigit(e.KeyChar)) e.Handled = true;
+        }
+
+        private void defualtTxt_btn_Click(object sender, EventArgs e)
+        {
+            isDefaultText = true;
+            test_btn.Text = "DEFAULT TEST";
         }
 
         private void close_btn_Click(object sender, EventArgs e)

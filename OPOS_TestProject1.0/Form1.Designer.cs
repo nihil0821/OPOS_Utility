@@ -50,6 +50,9 @@
             this.track3_tb = new System.Windows.Forms.TextBox();
             this.test_btn = new System.Windows.Forms.Button();
             this.ptr_gb = new System.Windows.Forms.GroupBox();
+            this.defualtTxt_btn = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.repeatNum_tb = new System.Windows.Forms.TextBox();
             this.openfile_btn = new System.Windows.Forms.Button();
             this.scn_gb = new System.Windows.Forms.GroupBox();
             this.msr_gb = new System.Windows.Forms.GroupBox();
@@ -60,21 +63,19 @@
             this.mSRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lineDisplayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.repeatNum_tb = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.axOPOSMSR1 = new AxOposMSR_CCO.AxOPOSMSR();
-            this.axOPOSLineDisplay1 = new AxOposLineDisplay_1_11_Lib.AxOPOSLineDisplay();
-            this.axOPOSScanner1 = new AxOposScanner_CCO.AxOPOSScanner();
             this.axOPOSPOSPrinter1 = new AxOposPOSPrinter_1_5_Lib.AxOPOSPOSPrinter();
+            this.axOPOSMSR1 = new AxOposMSR_CCO.AxOPOSMSR();
+            this.axOPOSScanner1 = new AxOposScanner_CCO.AxOPOSScanner();
+            this.axOPOSLineDisplay1 = new AxOposLineDisplay_1_5_Lib.AxOPOSLineDisplay();
             this.groupBox1.SuspendLayout();
             this.ptr_gb.SuspendLayout();
             this.scn_gb.SuspendLayout();
             this.msr_gb.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.axOPOSMSR1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.axOPOSLineDisplay1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.axOPOSScanner1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.axOPOSPOSPrinter1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.axOPOSMSR1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.axOPOSScanner1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.axOPOSLineDisplay1)).BeginInit();
             this.SuspendLayout();
             // 
             // ptr_btn
@@ -254,16 +255,17 @@
             // 
             // test_btn
             // 
-            this.test_btn.Location = new System.Drawing.Point(60, 139);
+            this.test_btn.Location = new System.Drawing.Point(60, 162);
             this.test_btn.Name = "test_btn";
             this.test_btn.Size = new System.Drawing.Size(99, 119);
             this.test_btn.TabIndex = 7;
-            this.test_btn.Text = "TEST";
+            this.test_btn.Text = "DEFAULT  TEST";
             this.test_btn.UseVisualStyleBackColor = true;
             this.test_btn.Click += new System.EventHandler(this.test_btn_Click);
             // 
             // ptr_gb
             // 
+            this.ptr_gb.Controls.Add(this.defualtTxt_btn);
             this.ptr_gb.Controls.Add(this.label2);
             this.ptr_gb.Controls.Add(this.repeatNum_tb);
             this.ptr_gb.Controls.Add(this.openfile_btn);
@@ -273,6 +275,34 @@
             this.ptr_gb.Size = new System.Drawing.Size(232, 404);
             this.ptr_gb.TabIndex = 7;
             this.ptr_gb.TabStop = false;
+            // 
+            // defualtTxt_btn
+            // 
+            this.defualtTxt_btn.Location = new System.Drawing.Point(6, 72);
+            this.defualtTxt_btn.Name = "defualtTxt_btn";
+            this.defualtTxt_btn.Size = new System.Drawing.Size(220, 44);
+            this.defualtTxt_btn.TabIndex = 24;
+            this.defualtTxt_btn.Text = "DEFAULT TEXT";
+            this.defualtTxt_btn.UseVisualStyleBackColor = true;
+            this.defualtTxt_btn.Click += new System.EventHandler(this.defualtTxt_btn_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("굴림", 10F);
+            this.label2.Location = new System.Drawing.Point(43, 132);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(86, 14);
+            this.label2.TabIndex = 23;
+            this.label2.Text = "Repeat Num";
+            // 
+            // repeatNum_tb
+            // 
+            this.repeatNum_tb.Location = new System.Drawing.Point(131, 129);
+            this.repeatNum_tb.Name = "repeatNum_tb";
+            this.repeatNum_tb.Size = new System.Drawing.Size(38, 21);
+            this.repeatNum_tb.TabIndex = 23;
+            this.repeatNum_tb.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.repeatNum_tb_KeyPress);
             // 
             // openfile_btn
             // 
@@ -310,7 +340,7 @@
             this.windowsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(518, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(516, 24);
             this.menuStrip1.TabIndex = 15;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -357,33 +387,32 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // repeatNum_tb
+            // axOPOSPOSPrinter1
             // 
-            this.repeatNum_tb.Location = new System.Drawing.Point(131, 92);
-            this.repeatNum_tb.Name = "repeatNum_tb";
-            this.repeatNum_tb.Size = new System.Drawing.Size(38, 21);
-            this.repeatNum_tb.TabIndex = 23;
-            this.repeatNum_tb.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.repeatNum_tb_KeyPress);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("굴림", 10F);
-            this.label2.Location = new System.Drawing.Point(43, 96);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(86, 14);
-            this.label2.TabIndex = 23;
-            this.label2.Text = "Repeat Num";
+            this.axOPOSPOSPrinter1.Enabled = true;
+            this.axOPOSPOSPrinter1.Location = new System.Drawing.Point(0, 0);
+            this.axOPOSPOSPrinter1.Name = "axOPOSPOSPrinter1";
+            this.axOPOSPOSPrinter1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axOPOSPOSPrinter1.OcxState")));
+            this.axOPOSPOSPrinter1.Size = new System.Drawing.Size(0, 0);
+            this.axOPOSPOSPrinter1.TabIndex = 16;
             // 
             // axOPOSMSR1
             // 
             this.axOPOSMSR1.Enabled = true;
-            this.axOPOSMSR1.Location = new System.Drawing.Point(24, 559);
+            this.axOPOSMSR1.Location = new System.Drawing.Point(625, 328);
             this.axOPOSMSR1.Name = "axOPOSMSR1";
             this.axOPOSMSR1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axOPOSMSR1.OcxState")));
             this.axOPOSMSR1.Size = new System.Drawing.Size(192, 192);
-            this.axOPOSMSR1.TabIndex = 8;
-            this.axOPOSMSR1.DataEvent += new AxOposMSR_CCO._IOPOSMSREvents_DataEventEventHandler(this.axOPOSMSR1_DataEvent);
+            this.axOPOSMSR1.TabIndex = 17;
+            // 
+            // axOPOSScanner1
+            // 
+            this.axOPOSScanner1.Enabled = true;
+            this.axOPOSScanner1.Location = new System.Drawing.Point(625, 124);
+            this.axOPOSScanner1.Name = "axOPOSScanner1";
+            this.axOPOSScanner1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axOPOSScanner1.OcxState")));
+            this.axOPOSScanner1.Size = new System.Drawing.Size(192, 192);
+            this.axOPOSScanner1.TabIndex = 18;
             // 
             // axOPOSLineDisplay1
             // 
@@ -392,42 +421,22 @@
             this.axOPOSLineDisplay1.Name = "axOPOSLineDisplay1";
             this.axOPOSLineDisplay1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axOPOSLineDisplay1.OcxState")));
             this.axOPOSLineDisplay1.Size = new System.Drawing.Size(0, 0);
-            this.axOPOSLineDisplay1.TabIndex = 7;
-            // 
-            // axOPOSScanner1
-            // 
-            this.axOPOSScanner1.Enabled = true;
-            this.axOPOSScanner1.Location = new System.Drawing.Point(222, 559);
-            this.axOPOSScanner1.Name = "axOPOSScanner1";
-            this.axOPOSScanner1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axOPOSScanner1.OcxState")));
-            this.axOPOSScanner1.Size = new System.Drawing.Size(192, 192);
-            this.axOPOSScanner1.TabIndex = 6;
-            this.axOPOSScanner1.DataEvent += new AxOposScanner_CCO._IOPOSScannerEvents_DataEventEventHandler(this.axOPOSScanner1_DataEvent);
-            // 
-            // axOPOSPOSPrinter1
-            // 
-            this.axOPOSPOSPrinter1.Enabled = true;
-            this.axOPOSPOSPrinter1.Location = new System.Drawing.Point(0, 0);
-            this.axOPOSPOSPrinter1.Name = "axOPOSPOSPrinter1";
-            this.axOPOSPOSPrinter1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axOPOSPOSPrinter1.OcxState")));
-            this.axOPOSPOSPrinter1.Size = new System.Drawing.Size(0, 0);
-            this.axOPOSPOSPrinter1.TabIndex = 0;
-            this.axOPOSPOSPrinter1.ErrorEvent += new AxOposPOSPrinter_1_5_Lib._IOPOSPOSPrinterEvents_ErrorEventEventHandler(this.axOPOSPOSPrinter1_ErrorEvent);
+            this.axOPOSLineDisplay1.TabIndex = 19;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(518, 601);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.axOPOSMSR1);
+            this.ClientSize = new System.Drawing.Size(516, 601);
             this.Controls.Add(this.axOPOSLineDisplay1);
             this.Controls.Add(this.axOPOSScanner1);
+            this.Controls.Add(this.axOPOSMSR1);
+            this.Controls.Add(this.axOPOSPOSPrinter1);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.cdp_btn);
             this.Controls.Add(this.msr_btn);
             this.Controls.Add(this.scn_btn);
             this.Controls.Add(this.ptr_btn);
-            this.Controls.Add(this.axOPOSPOSPrinter1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.ptr_gb);
             this.Controls.Add(this.msr_gb);
@@ -445,10 +454,10 @@
             this.msr_gb.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.axOPOSMSR1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.axOPOSLineDisplay1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.axOPOSScanner1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.axOPOSPOSPrinter1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.axOPOSMSR1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.axOPOSScanner1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.axOPOSLineDisplay1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -456,15 +465,13 @@
 
         #endregion
 
-        private AxOposPOSPrinter_1_5_Lib.AxOPOSPOSPrinter axOPOSPOSPrinter1;
+
         private System.Windows.Forms.Button ptr_btn;
         private System.Windows.Forms.Button scn_btn;
         private System.Windows.Forms.Button msr_btn;
         private System.Windows.Forms.Button cdp_btn;
         private System.Windows.Forms.Button open_btn;
-        private AxOposScanner_CCO.AxOPOSScanner axOPOSScanner1;
-        private AxOposLineDisplay_1_11_Lib.AxOPOSLineDisplay axOPOSLineDisplay1;
-        private AxOposMSR_CCO.AxOPOSMSR axOPOSMSR1;
+
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button close_btn;
         private System.Windows.Forms.TextBox result_tb;
@@ -493,6 +500,11 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox repeatNum_tb;
+        private System.Windows.Forms.Button defualtTxt_btn;
+        private AxOposPOSPrinter_1_5_Lib.AxOPOSPOSPrinter axOPOSPOSPrinter1;
+        private AxOposMSR_CCO.AxOPOSMSR axOPOSMSR1;
+        private AxOposScanner_CCO.AxOPOSScanner axOPOSScanner1;
+        private AxOposLineDisplay_1_5_Lib.AxOPOSLineDisplay axOPOSLineDisplay1;
     }
 }
 

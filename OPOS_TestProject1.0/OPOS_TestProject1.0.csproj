@@ -108,7 +108,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <COMReference Include="AxOposLineDisplay_1_11_Lib">
+    <COMReference Include="AxOposLineDisplay_1_5_Lib">
       <Guid>{CCB90100-B81E-11D2-AB74-0040054C3719}</Guid>
       <VersionMajor>1</VersionMajor>
       <VersionMinor>0</VersionMinor>
@@ -140,7 +140,7 @@
       <WrapperTool>aximp</WrapperTool>
       <Isolated>False</Isolated>
     </COMReference>
-    <COMReference Include="OposLineDisplay_1_11_Lib">
+    <COMReference Include="OposLineDisplay_1_5_Lib">
       <Guid>{CCB90100-B81E-11D2-AB74-0040054C3719}</Guid>
       <VersionMajor>1</VersionMajor>
       <VersionMinor>0</VersionMinor>
