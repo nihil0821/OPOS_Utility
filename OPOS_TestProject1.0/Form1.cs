@@ -37,6 +37,7 @@ namespace OPOS_TestProject1._0
         public const int MSR_NUM = 3;
         public const int CDP_NUM = 4;
 
+        //Registry value store String[]
         string[] rkey_ptr;
         string[] rkey_ptrSub;
         string[] rkey_scn;
@@ -48,10 +49,8 @@ namespace OPOS_TestProject1._0
 
         int returnCode_open;
         int returnCode_claim;
-        int returnCode_enable;
-        int returnCode_disenable;
-        int returnCode_release;
-        int returnCode_close;
+        //int returnCode_release;
+        //int returnCode_close;
 
         String resultCodeString, returnCodeString;
 
@@ -138,6 +137,9 @@ namespace OPOS_TestProject1._0
 
             repeatNum_tb.MaxLength = 4;
             repeatNum_tb.Text = "1";
+
+            simpleMode_chkb.Checked = true;
+
         }
 
         private void ptr_btn_Click(object sender, EventArgs e)
@@ -152,6 +154,10 @@ namespace OPOS_TestProject1._0
             ldn_cb.Items.AddRange(rkey_ptr);
             ldn_cb.Items.AddRange(rkey_ptrSub);
             ldn_cb.SelectedIndex = 0;
+
+            openfile_btn.Visible = true;
+            repeatNum_tb.Visible = true;
+            repeatNum_lb.Visible = true;
         }
 
         private void scn_btn_Click(object sender, EventArgs e)
@@ -171,6 +177,9 @@ namespace OPOS_TestProject1._0
         private void axOPOSScanner1_DataEvent(object sender, AxOposScanner_CCO._IOPOSScannerEvents_DataEventEvent e)
         {
             result_tb.Text = axOPOSScanner1.ScanData;
+            scandata_rtb.Text = axOPOSScanner1.ScanData;
+            axOPOSScanner1.DataEventEnabled = true;
+
         }
 
         private void msr_btn_Click(object sender, EventArgs e)
@@ -210,6 +219,10 @@ namespace OPOS_TestProject1._0
             ldn_cb.Items.AddRange(rkey_cdp);
             ldn_cb.Items.AddRange(rkey_cdpSub);
             ldn_cb.SelectedIndex = 0;
+
+            openfile_btn.Visible = false;
+            repeatNum_tb.Visible = false;
+            repeatNum_lb.Visible = false;
         }
 
         private void test_btn_Click(object sender, EventArgs e)
@@ -299,11 +312,6 @@ namespace OPOS_TestProject1._0
             ldn_cb.SelectedIndex = 0;
         }
 
-        private void axOPOSPOSPrinter1_ErrorEvent(object sender, AxOposPOSPrinter_1_5_Lib._IOPOSPOSPrinterEvents_ErrorEventEvent e)
-        {
-
-        }
-
         private void openfile_btn_Click(object sender, EventArgs e)
         {
             isDefaultText = false;
@@ -331,6 +339,34 @@ namespace OPOS_TestProject1._0
             test_btn.Text = "DEFAULT TEST";
         }
 
+        private void simpleMode_chkb_CheckStateChanged(object sender, EventArgs e)
+        {
+            if(simpleMode_chkb.Checked)
+            {
+                open_btn.Visible = true;
+                close_btn.Visible = true;
+
+                dOpen_btn.Enabled = false;
+                dClaim_btn.Enabled = false;
+                dEnable_btn.Enabled = false;
+            }
+            else
+            {
+                open_btn.Visible = false;
+                close_btn.Visible = false;
+
+                dOpen_btn.Enabled = true;
+                dClaim_btn.Enabled = false;
+                dEnable_btn.Enabled = false;
+            }
+        }
+
+        private void scandata_rtb_MouseClick(object sender, MouseEventArgs e)
+        {
+            scandata_rtb.Clear();
+            axOPOSScanner1.DataEventEnabled = true;
+        }
+
         private void close_btn_Click(object sender, EventArgs e)
         {
             switch (device_num)
@@ -348,6 +384,7 @@ namespace OPOS_TestProject1._0
                         axOPOSScanner1.ReleaseDevice();
                         axOPOSScanner1.Close();
                         result_tb.Clear();
+                        scandata_rtb.Clear();
                     }
                     break;
                 case MSR_NUM:
@@ -393,6 +430,7 @@ namespace OPOS_TestProject1._0
                         axOPOSScanner1.ClaimDevice(1000);
                         axOPOSScanner1.DeviceEnabled = true;
                         result_tb.Clear();
+                        scandata_rtb.Clear();
                     }
                     break;
                 case MSR_NUM:
