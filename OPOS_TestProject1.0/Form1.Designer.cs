@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.ptr_btn = new System.Windows.Forms.Button();
             this.scn_btn = new System.Windows.Forms.Button();
@@ -66,20 +67,29 @@
             this.dataEventEnabled_btn = new System.Windows.Forms.Button();
             this.scandata_rtb = new System.Windows.Forms.RichTextBox();
             this.msr_gb = new System.Windows.Forms.GroupBox();
-            this.test_rtb = new System.Windows.Forms.RichTextBox();
+            this.richTextBox6 = new System.Windows.Forms.RichTextBox();
+            this.richTextBox13 = new System.Windows.Forms.RichTextBox();
+            this.richTextBox8 = new System.Windows.Forms.RichTextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.msrResultCode_rtb = new System.Windows.Forms.RichTextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.msrErrorLocus_rtb = new System.Windows.Forms.RichTextBox();
+            this.msrRCExtended_rtb = new System.Windows.Forms.RichTextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.richTextBox14 = new System.Windows.Forms.RichTextBox();
-            this.richTextBox13 = new System.Windows.Forms.RichTextBox();
-            this.richTextBox8 = new System.Windows.Forms.RichTextBox();
-            this.richTextBox6 = new System.Windows.Forms.RichTextBox();
+            this.expirationDate_rtb = new System.Windows.Forms.RichTextBox();
+            this.firstName_rtb = new System.Windows.Forms.RichTextBox();
+            this.surName_rtb = new System.Windows.Forms.RichTextBox();
+            this.cardNum_rtb = new System.Windows.Forms.RichTextBox();
             this.track3_rtb = new System.Windows.Forms.RichTextBox();
             this.track2_rtb = new System.Windows.Forms.RichTextBox();
             this.track1_rtb = new System.Windows.Forms.RichTextBox();
+            this.test_rtb = new System.Windows.Forms.RichTextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.windowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -105,62 +115,80 @@
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.currentDevice_rtb = new System.Windows.Forms.RichTextBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.axOPOSLineDisplay1 = new AxOposLineDisplay_1_5_Lib.AxOPOSLineDisplay();
             this.axOPOSPOSPrinter1 = new AxOposPOSPrinter_1_5_Lib.AxOPOSPOSPrinter();
             this.axOPOSScanner1 = new AxOposScanner_CCO.AxOPOSScanner();
             this.axOPOSMSR1 = new AxOposMSR_CCO.AxOPOSMSR();
+            this.cashTimer = new System.Windows.Forms.Timer(this.components);
+            this.cash_btn = new System.Windows.Forms.Button();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.openDrawer_btn = new System.Windows.Forms.Button();
+            this.richTextBox14 = new System.Windows.Forms.RichTextBox();
+            this.richTextBox15 = new System.Windows.Forms.RichTextBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.ptr_gb.SuspendLayout();
             this.scn_gb.SuspendLayout();
             this.msr_gb.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.disp_gb.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.axOPOSLineDisplay1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.axOPOSPOSPrinter1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.axOPOSScanner1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.axOPOSMSR1)).BeginInit();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // ptr_btn
             // 
+            this.ptr_btn.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.ptr_btn.BackgroundImage = global::OPOS_TestProject1._0.Properties.Resources.print;
+            this.ptr_btn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ptr_btn.Location = new System.Drawing.Point(267, 27);
             this.ptr_btn.Name = "ptr_btn";
-            this.ptr_btn.Size = new System.Drawing.Size(78, 27);
+            this.ptr_btn.Size = new System.Drawing.Size(58, 53);
             this.ptr_btn.TabIndex = 1;
-            this.ptr_btn.Text = "PRINTER";
-            this.ptr_btn.UseVisualStyleBackColor = true;
+            this.ptr_btn.UseVisualStyleBackColor = false;
             this.ptr_btn.Click += new System.EventHandler(this.printerMenuItem_Click);
             // 
             // scn_btn
             // 
-            this.scn_btn.Location = new System.Drawing.Point(351, 27);
+            this.scn_btn.BackColor = System.Drawing.SystemColors.Control;
+            this.scn_btn.BackgroundImage = global::OPOS_TestProject1._0.Properties.Resources.scanner;
+            this.scn_btn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.scn_btn.Location = new System.Drawing.Point(331, 27);
             this.scn_btn.Name = "scn_btn";
-            this.scn_btn.Size = new System.Drawing.Size(78, 27);
+            this.scn_btn.Size = new System.Drawing.Size(58, 53);
             this.scn_btn.TabIndex = 2;
-            this.scn_btn.Text = "SCANNER";
-            this.scn_btn.UseVisualStyleBackColor = true;
+            this.scn_btn.UseVisualStyleBackColor = false;
             this.scn_btn.Click += new System.EventHandler(this.scannerMenuItem_Click);
             // 
             // msr_btn
             // 
-            this.msr_btn.Location = new System.Drawing.Point(267, 57);
+            this.msr_btn.BackgroundImage = global::OPOS_TestProject1._0.Properties.Resources.msr;
+            this.msr_btn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.msr_btn.Location = new System.Drawing.Point(395, 28);
             this.msr_btn.Name = "msr_btn";
-            this.msr_btn.Size = new System.Drawing.Size(78, 27);
+            this.msr_btn.Size = new System.Drawing.Size(58, 53);
             this.msr_btn.TabIndex = 3;
-            this.msr_btn.Text = "MSR";
             this.msr_btn.UseVisualStyleBackColor = true;
             this.msr_btn.Click += new System.EventHandler(this.msrMenuItem_Click);
             // 
             // cdp_btn
             // 
-            this.cdp_btn.Location = new System.Drawing.Point(351, 57);
+            this.cdp_btn.BackColor = System.Drawing.SystemColors.ControlText;
+            this.cdp_btn.BackgroundImage = global::OPOS_TestProject1._0.Properties.Resources.disp;
+            this.cdp_btn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.cdp_btn.Location = new System.Drawing.Point(459, 27);
             this.cdp_btn.Name = "cdp_btn";
-            this.cdp_btn.Size = new System.Drawing.Size(78, 27);
+            this.cdp_btn.Size = new System.Drawing.Size(58, 53);
             this.cdp_btn.TabIndex = 4;
-            this.cdp_btn.Text = "CDP";
-            this.cdp_btn.UseVisualStyleBackColor = true;
+            this.cdp_btn.UseVisualStyleBackColor = false;
             this.cdp_btn.Click += new System.EventHandler(this.cdpMenuItem_Click);
             // 
             // open_btn
@@ -250,6 +278,7 @@
             // close_btn
             // 
             this.close_btn.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.close_btn.Enabled = false;
             this.close_btn.Font = new System.Drawing.Font("굴림", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.close_btn.Location = new System.Drawing.Point(6, 224);
             this.close_btn.Name = "close_btn";
@@ -582,7 +611,9 @@
             // msr_gb
             // 
             this.msr_gb.BackColor = System.Drawing.SystemColors.Control;
-            this.msr_gb.Controls.Add(this.test_rtb);
+            this.msr_gb.Controls.Add(this.richTextBox6);
+            this.msr_gb.Controls.Add(this.richTextBox13);
+            this.msr_gb.Controls.Add(this.richTextBox8);
             this.msr_gb.Controls.Add(this.groupBox3);
             this.msr_gb.Controls.Add(this.groupBox2);
             this.msr_gb.Controls.Add(this.track3_rtb);
@@ -594,18 +625,53 @@
             this.msr_gb.TabIndex = 14;
             this.msr_gb.TabStop = false;
             // 
-            // test_rtb
+            // richTextBox6
             // 
-            this.test_rtb.BackColor = System.Drawing.Color.Cornsilk;
-            this.test_rtb.Location = new System.Drawing.Point(12, 300);
-            this.test_rtb.Name = "test_rtb";
-            this.test_rtb.ReadOnly = true;
-            this.test_rtb.Size = new System.Drawing.Size(345, 112);
-            this.test_rtb.TabIndex = 13;
-            this.test_rtb.Text = "";
+            this.richTextBox6.BackColor = System.Drawing.Color.Cyan;
+            this.richTextBox6.Enabled = false;
+            this.richTextBox6.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.richTextBox6.Location = new System.Drawing.Point(6, 19);
+            this.richTextBox6.Multiline = false;
+            this.richTextBox6.Name = "richTextBox6";
+            this.richTextBox6.ReadOnly = true;
+            this.richTextBox6.Size = new System.Drawing.Size(52, 23);
+            this.richTextBox6.TabIndex = 14;
+            this.richTextBox6.Text = "Track1";
+            // 
+            // richTextBox13
+            // 
+            this.richTextBox13.BackColor = System.Drawing.Color.Cyan;
+            this.richTextBox13.Enabled = false;
+            this.richTextBox13.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.richTextBox13.Location = new System.Drawing.Point(6, 75);
+            this.richTextBox13.Multiline = false;
+            this.richTextBox13.Name = "richTextBox13";
+            this.richTextBox13.ReadOnly = true;
+            this.richTextBox13.Size = new System.Drawing.Size(52, 23);
+            this.richTextBox13.TabIndex = 16;
+            this.richTextBox13.Text = "Track3";
+            // 
+            // richTextBox8
+            // 
+            this.richTextBox8.BackColor = System.Drawing.Color.Cyan;
+            this.richTextBox8.Enabled = false;
+            this.richTextBox8.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.richTextBox8.Location = new System.Drawing.Point(6, 47);
+            this.richTextBox8.Multiline = false;
+            this.richTextBox8.Name = "richTextBox8";
+            this.richTextBox8.ReadOnly = true;
+            this.richTextBox8.Size = new System.Drawing.Size(52, 23);
+            this.richTextBox8.TabIndex = 15;
+            this.richTextBox8.Text = "Track2";
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.msrResultCode_rtb);
+            this.groupBox3.Controls.Add(this.label7);
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Controls.Add(this.label5);
+            this.groupBox3.Controls.Add(this.msrErrorLocus_rtb);
+            this.groupBox3.Controls.Add(this.msrRCExtended_rtb);
             this.groupBox3.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.groupBox3.Location = new System.Drawing.Point(232, 104);
             this.groupBox3.Name = "groupBox3";
@@ -614,16 +680,82 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "ErrorEvent";
             // 
+            // msrResultCode_rtb
+            // 
+            this.msrResultCode_rtb.BackColor = System.Drawing.Color.LavenderBlush;
+            this.msrResultCode_rtb.ForeColor = System.Drawing.Color.Red;
+            this.msrResultCode_rtb.Location = new System.Drawing.Point(6, 53);
+            this.msrResultCode_rtb.Multiline = false;
+            this.msrResultCode_rtb.Name = "msrResultCode_rtb";
+            this.msrResultCode_rtb.ReadOnly = true;
+            this.msrResultCode_rtb.Size = new System.Drawing.Size(113, 23);
+            this.msrResultCode_rtb.TabIndex = 29;
+            this.msrResultCode_rtb.Text = "ResultCode";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("굴림", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label7.Location = new System.Drawing.Point(4, 135);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(80, 11);
+            this.label7.TabIndex = 28;
+            this.label7.Text = "Error Locus";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("굴림", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label6.Location = new System.Drawing.Point(4, 88);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(88, 11);
+            this.label6.TabIndex = 27;
+            this.label6.Text = "RC Extended";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("굴림", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label5.Location = new System.Drawing.Point(4, 41);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(47, 11);
+            this.label5.TabIndex = 13;
+            this.label5.Text = "Result";
+            // 
+            // msrErrorLocus_rtb
+            // 
+            this.msrErrorLocus_rtb.BackColor = System.Drawing.Color.LavenderBlush;
+            this.msrErrorLocus_rtb.ForeColor = System.Drawing.Color.Red;
+            this.msrErrorLocus_rtb.Location = new System.Drawing.Point(6, 147);
+            this.msrErrorLocus_rtb.Multiline = false;
+            this.msrErrorLocus_rtb.Name = "msrErrorLocus_rtb";
+            this.msrErrorLocus_rtb.ReadOnly = true;
+            this.msrErrorLocus_rtb.Size = new System.Drawing.Size(113, 23);
+            this.msrErrorLocus_rtb.TabIndex = 26;
+            this.msrErrorLocus_rtb.Text = "ResultCode";
+            // 
+            // msrRCExtended_rtb
+            // 
+            this.msrRCExtended_rtb.BackColor = System.Drawing.Color.LavenderBlush;
+            this.msrRCExtended_rtb.ForeColor = System.Drawing.Color.Red;
+            this.msrRCExtended_rtb.Location = new System.Drawing.Point(6, 100);
+            this.msrRCExtended_rtb.Multiline = false;
+            this.msrRCExtended_rtb.Name = "msrRCExtended_rtb";
+            this.msrRCExtended_rtb.ReadOnly = true;
+            this.msrRCExtended_rtb.Size = new System.Drawing.Size(113, 23);
+            this.msrRCExtended_rtb.TabIndex = 25;
+            this.msrRCExtended_rtb.Text = "ResultCode";
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.richTextBox14);
-            this.groupBox2.Controls.Add(this.richTextBox13);
-            this.groupBox2.Controls.Add(this.richTextBox8);
-            this.groupBox2.Controls.Add(this.richTextBox6);
+            this.groupBox2.Controls.Add(this.expirationDate_rtb);
+            this.groupBox2.Controls.Add(this.firstName_rtb);
+            this.groupBox2.Controls.Add(this.surName_rtb);
+            this.groupBox2.Controls.Add(this.cardNum_rtb);
             this.groupBox2.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.groupBox2.Location = new System.Drawing.Point(6, 104);
             this.groupBox2.Name = "groupBox2";
@@ -672,82 +804,92 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "Card Num";
             // 
-            // richTextBox14
+            // expirationDate_rtb
             // 
-            this.richTextBox14.BackColor = System.Drawing.Color.Cornsilk;
-            this.richTextBox14.Location = new System.Drawing.Point(6, 159);
-            this.richTextBox14.Multiline = false;
-            this.richTextBox14.Name = "richTextBox14";
-            this.richTextBox14.ReadOnly = true;
-            this.richTextBox14.Size = new System.Drawing.Size(208, 23);
-            this.richTextBox14.TabIndex = 8;
-            this.richTextBox14.Text = "";
+            this.expirationDate_rtb.BackColor = System.Drawing.Color.Cornsilk;
+            this.expirationDate_rtb.Location = new System.Drawing.Point(6, 159);
+            this.expirationDate_rtb.Multiline = false;
+            this.expirationDate_rtb.Name = "expirationDate_rtb";
+            this.expirationDate_rtb.ReadOnly = true;
+            this.expirationDate_rtb.Size = new System.Drawing.Size(208, 23);
+            this.expirationDate_rtb.TabIndex = 8;
+            this.expirationDate_rtb.Text = "";
             // 
-            // richTextBox13
+            // firstName_rtb
             // 
-            this.richTextBox13.BackColor = System.Drawing.Color.Cornsilk;
-            this.richTextBox13.Location = new System.Drawing.Point(6, 118);
-            this.richTextBox13.Multiline = false;
-            this.richTextBox13.Name = "richTextBox13";
-            this.richTextBox13.ReadOnly = true;
-            this.richTextBox13.Size = new System.Drawing.Size(208, 23);
-            this.richTextBox13.TabIndex = 7;
-            this.richTextBox13.Text = "";
+            this.firstName_rtb.BackColor = System.Drawing.Color.Cornsilk;
+            this.firstName_rtb.Location = new System.Drawing.Point(6, 118);
+            this.firstName_rtb.Multiline = false;
+            this.firstName_rtb.Name = "firstName_rtb";
+            this.firstName_rtb.ReadOnly = true;
+            this.firstName_rtb.Size = new System.Drawing.Size(208, 23);
+            this.firstName_rtb.TabIndex = 7;
+            this.firstName_rtb.Text = "";
             // 
-            // richTextBox8
+            // surName_rtb
             // 
-            this.richTextBox8.BackColor = System.Drawing.Color.Cornsilk;
-            this.richTextBox8.Location = new System.Drawing.Point(6, 77);
-            this.richTextBox8.Multiline = false;
-            this.richTextBox8.Name = "richTextBox8";
-            this.richTextBox8.ReadOnly = true;
-            this.richTextBox8.Size = new System.Drawing.Size(208, 23);
-            this.richTextBox8.TabIndex = 6;
-            this.richTextBox8.Text = "";
+            this.surName_rtb.BackColor = System.Drawing.Color.Cornsilk;
+            this.surName_rtb.Location = new System.Drawing.Point(6, 77);
+            this.surName_rtb.Multiline = false;
+            this.surName_rtb.Name = "surName_rtb";
+            this.surName_rtb.ReadOnly = true;
+            this.surName_rtb.Size = new System.Drawing.Size(208, 23);
+            this.surName_rtb.TabIndex = 6;
+            this.surName_rtb.Text = "";
             // 
-            // richTextBox6
+            // cardNum_rtb
             // 
-            this.richTextBox6.BackColor = System.Drawing.Color.Cornsilk;
-            this.richTextBox6.Location = new System.Drawing.Point(6, 36);
-            this.richTextBox6.Multiline = false;
-            this.richTextBox6.Name = "richTextBox6";
-            this.richTextBox6.ReadOnly = true;
-            this.richTextBox6.Size = new System.Drawing.Size(208, 23);
-            this.richTextBox6.TabIndex = 5;
-            this.richTextBox6.Text = "";
+            this.cardNum_rtb.BackColor = System.Drawing.Color.Cornsilk;
+            this.cardNum_rtb.Location = new System.Drawing.Point(6, 36);
+            this.cardNum_rtb.Multiline = false;
+            this.cardNum_rtb.Name = "cardNum_rtb";
+            this.cardNum_rtb.ReadOnly = true;
+            this.cardNum_rtb.Size = new System.Drawing.Size(208, 23);
+            this.cardNum_rtb.TabIndex = 5;
+            this.cardNum_rtb.Text = "";
             // 
             // track3_rtb
             // 
             this.track3_rtb.BackColor = System.Drawing.Color.Gold;
-            this.track3_rtb.Location = new System.Drawing.Point(43, 75);
+            this.track3_rtb.Location = new System.Drawing.Point(54, 75);
             this.track3_rtb.Multiline = false;
             this.track3_rtb.Name = "track3_rtb";
             this.track3_rtb.ReadOnly = true;
-            this.track3_rtb.Size = new System.Drawing.Size(314, 23);
+            this.track3_rtb.Size = new System.Drawing.Size(303, 23);
             this.track3_rtb.TabIndex = 2;
             this.track3_rtb.Text = "";
             // 
             // track2_rtb
             // 
             this.track2_rtb.BackColor = System.Drawing.Color.Gold;
-            this.track2_rtb.Location = new System.Drawing.Point(43, 47);
+            this.track2_rtb.Location = new System.Drawing.Point(54, 47);
             this.track2_rtb.Multiline = false;
             this.track2_rtb.Name = "track2_rtb";
             this.track2_rtb.ReadOnly = true;
-            this.track2_rtb.Size = new System.Drawing.Size(314, 23);
+            this.track2_rtb.Size = new System.Drawing.Size(303, 23);
             this.track2_rtb.TabIndex = 1;
             this.track2_rtb.Text = "";
             // 
             // track1_rtb
             // 
             this.track1_rtb.BackColor = System.Drawing.Color.Gold;
-            this.track1_rtb.Location = new System.Drawing.Point(43, 19);
+            this.track1_rtb.Location = new System.Drawing.Point(54, 19);
             this.track1_rtb.Multiline = false;
             this.track1_rtb.Name = "track1_rtb";
             this.track1_rtb.ReadOnly = true;
-            this.track1_rtb.Size = new System.Drawing.Size(314, 23);
+            this.track1_rtb.Size = new System.Drawing.Size(303, 23);
             this.track1_rtb.TabIndex = 0;
             this.track1_rtb.Text = "";
+            // 
+            // test_rtb
+            // 
+            this.test_rtb.BackColor = System.Drawing.Color.Cornsilk;
+            this.test_rtb.Location = new System.Drawing.Point(636, 98);
+            this.test_rtb.Name = "test_rtb";
+            this.test_rtb.ReadOnly = true;
+            this.test_rtb.Size = new System.Drawing.Size(46, 112);
+            this.test_rtb.TabIndex = 13;
+            this.test_rtb.Text = "";
             // 
             // menuStrip1
             // 
@@ -755,7 +897,7 @@
             this.windowsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1024, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1089, 24);
             this.menuStrip1.TabIndex = 15;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -1045,17 +1187,9 @@
             this.currentDevice_rtb.TabIndex = 21;
             this.currentDevice_rtb.Text = "POS Printer";
             // 
-            // listBox1
+            // errorProvider1
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 12;
-            this.listBox1.Items.AddRange(new object[] {
-            "123124",
-            "asdfasdf"});
-            this.listBox1.Location = new System.Drawing.Point(684, 106);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(62, 268);
-            this.listBox1.TabIndex = 22;
+            this.errorProvider1.ContainerControl = this;
             // 
             // axOPOSLineDisplay1
             // 
@@ -1064,7 +1198,7 @@
             this.axOPOSLineDisplay1.Name = "axOPOSLineDisplay1";
             this.axOPOSLineDisplay1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axOPOSLineDisplay1.OcxState")));
             this.axOPOSLineDisplay1.Size = new System.Drawing.Size(0, 0);
-            this.axOPOSLineDisplay1.TabIndex = 24;
+            this.axOPOSLineDisplay1.TabIndex = 23;
             // 
             // axOPOSPOSPrinter1
             // 
@@ -1073,7 +1207,8 @@
             this.axOPOSPOSPrinter1.Name = "axOPOSPOSPrinter1";
             this.axOPOSPOSPrinter1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axOPOSPOSPrinter1.OcxState")));
             this.axOPOSPOSPrinter1.Size = new System.Drawing.Size(0, 0);
-            this.axOPOSPOSPrinter1.TabIndex = 23;
+            this.axOPOSPOSPrinter1.TabIndex = 22;
+            this.axOPOSPOSPrinter1.ErrorEvent += new AxOposPOSPrinter_1_5_Lib._IOPOSPOSPrinterEvents_ErrorEventEventHandler(this.axOPOSPOSPrinter1_ErrorEvent);
             // 
             // axOPOSScanner1
             // 
@@ -1084,6 +1219,7 @@
             this.axOPOSScanner1.Size = new System.Drawing.Size(192, 192);
             this.axOPOSScanner1.TabIndex = 18;
             this.axOPOSScanner1.DataEvent += new AxOposScanner_CCO._IOPOSScannerEvents_DataEventEventHandler(this.axOPOSScanner1_DataEvent);
+            this.axOPOSScanner1.ErrorEvent += new AxOposScanner_CCO._IOPOSScannerEvents_ErrorEventEventHandler(this.axOPOSScanner1_ErrorEvent);
             // 
             // axOPOSMSR1
             // 
@@ -1094,16 +1230,106 @@
             this.axOPOSMSR1.Size = new System.Drawing.Size(192, 192);
             this.axOPOSMSR1.TabIndex = 17;
             this.axOPOSMSR1.DataEvent += new AxOposMSR_CCO._IOPOSMSREvents_DataEventEventHandler(this.axOPOSMSR1_DataEvent);
+            this.axOPOSMSR1.ErrorEvent += new AxOposMSR_CCO._IOPOSMSREvents_ErrorEventEventHandler(this.axOPOSMSR1_ErrorEvent);
+            // 
+            // cashTimer
+            // 
+            this.cashTimer.Interval = 1000;
+            // 
+            // cash_btn
+            // 
+            this.cash_btn.BackColor = System.Drawing.Color.LemonChiffon;
+            this.cash_btn.BackgroundImage = global::OPOS_TestProject1._0.Properties.Resources.cashdrawer;
+            this.cash_btn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.cash_btn.Location = new System.Drawing.Point(523, 27);
+            this.cash_btn.Name = "cash_btn";
+            this.cash_btn.Size = new System.Drawing.Size(58, 53);
+            this.cash_btn.TabIndex = 24;
+            this.cash_btn.UseVisualStyleBackColor = false;
+            this.cash_btn.Click += new System.EventHandler(this.cashMenuItem_Click);
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.label8);
+            this.groupBox4.Controls.Add(this.checkBox1);
+            this.groupBox4.Controls.Add(this.richTextBox14);
+            this.groupBox4.Controls.Add(this.openDrawer_btn);
+            this.groupBox4.Controls.Add(this.richTextBox15);
+            this.groupBox4.Location = new System.Drawing.Point(636, 86);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(363, 425);
+            this.groupBox4.TabIndex = 28;
+            this.groupBox4.TabStop = false;
+            // 
+            // openDrawer_btn
+            // 
+            this.openDrawer_btn.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.openDrawer_btn.Font = new System.Drawing.Font("굴림", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.openDrawer_btn.Location = new System.Drawing.Point(22, 17);
+            this.openDrawer_btn.Name = "openDrawer_btn";
+            this.openDrawer_btn.Size = new System.Drawing.Size(106, 88);
+            this.openDrawer_btn.TabIndex = 28;
+            this.openDrawer_btn.Text = "Open CashDrawer";
+            this.openDrawer_btn.UseVisualStyleBackColor = false;
+            // 
+            // richTextBox14
+            // 
+            this.richTextBox14.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.richTextBox14.Font = new System.Drawing.Font("굴림", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.richTextBox14.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.richTextBox14.Location = new System.Drawing.Point(134, 46);
+            this.richTextBox14.Multiline = false;
+            this.richTextBox14.Name = "richTextBox14";
+            this.richTextBox14.ReadOnly = true;
+            this.richTextBox14.Size = new System.Drawing.Size(223, 28);
+            this.richTextBox14.TabIndex = 42;
+            this.richTextBox14.Text = "Result Code ( )";
+            // 
+            // richTextBox15
+            // 
+            this.richTextBox15.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.richTextBox15.Font = new System.Drawing.Font("굴림", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.richTextBox15.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.richTextBox15.Location = new System.Drawing.Point(134, 19);
+            this.richTextBox15.Multiline = false;
+            this.richTextBox15.Name = "richTextBox15";
+            this.richTextBox15.ReadOnly = true;
+            this.richTextBox15.Size = new System.Drawing.Size(223, 28);
+            this.richTextBox15.TabIndex = 41;
+            this.richTextBox15.Text = "Return Code ( )";
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(134, 82);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(93, 16);
+            this.checkBox1.TabIndex = 31;
+            this.checkBox1.Text = "Timer Mode";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("굴림", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label8.Location = new System.Drawing.Point(18, 129);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(98, 19);
+            this.label8.TabIndex = 13;
+            this.label8.Text = "Card Num";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1024, 601);
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(1089, 545);
+            this.Controls.Add(this.groupBox4);
+            this.Controls.Add(this.cash_btn);
             this.Controls.Add(this.axOPOSLineDisplay1);
             this.Controls.Add(this.axOPOSPOSPrinter1);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.test_rtb);
             this.Controls.Add(this.currentDevice_rtb);
             this.Controls.Add(this.axOPOSScanner1);
             this.Controls.Add(this.axOPOSMSR1);
@@ -1118,24 +1344,30 @@
             this.Controls.Add(this.ptr_gb);
             this.Controls.Add(this.scn_gb);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "NDG OPOS Utility";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ptr_gb.ResumeLayout(false);
             this.ptr_gb.PerformLayout();
             this.scn_gb.ResumeLayout(false);
             this.msr_gb.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.disp_gb.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.axOPOSLineDisplay1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.axOPOSPOSPrinter1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.axOPOSScanner1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.axOPOSMSR1)).EndInit();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1214,18 +1446,35 @@
         private System.Windows.Forms.RichTextBox track3_rtb;
         private System.Windows.Forms.RichTextBox track2_rtb;
         private System.Windows.Forms.RichTextBox track1_rtb;
-        private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.RichTextBox richTextBox14;
+        private System.Windows.Forms.RichTextBox expirationDate_rtb;
+        private System.Windows.Forms.RichTextBox firstName_rtb;
+        private System.Windows.Forms.RichTextBox surName_rtb;
+        private System.Windows.Forms.RichTextBox cardNum_rtb;
+        private System.Windows.Forms.RichTextBox test_rtb;
+        private System.Windows.Forms.RichTextBox richTextBox6;
         private System.Windows.Forms.RichTextBox richTextBox13;
         private System.Windows.Forms.RichTextBox richTextBox8;
-        private System.Windows.Forms.RichTextBox richTextBox6;
-        private System.Windows.Forms.RichTextBox test_rtb;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.RichTextBox msrErrorLocus_rtb;
+        private System.Windows.Forms.RichTextBox msrRCExtended_rtb;
+        private System.Windows.Forms.RichTextBox msrResultCode_rtb;
         private AxOposPOSPrinter_1_5_Lib.AxOPOSPOSPrinter axOPOSPOSPrinter1;
         private AxOposLineDisplay_1_5_Lib.AxOPOSLineDisplay axOPOSLineDisplay1;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.Button cash_btn;
+        private System.Windows.Forms.Timer cashTimer;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Button openDrawer_btn;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.RichTextBox richTextBox14;
+        private System.Windows.Forms.RichTextBox richTextBox15;
     }
 }
 

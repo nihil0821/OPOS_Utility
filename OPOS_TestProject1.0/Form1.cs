@@ -86,7 +86,7 @@ namespace OPOS_TestProject1._0
         public Form1()
         {
             InitializeComponent();
-            init_visible();
+            init();
             StringToUTF8();
         }
 
@@ -116,13 +116,15 @@ namespace OPOS_TestProject1._0
 
         }
 
-        private void init_visible()
+        private void init()
         {
             ptr_gb.Visible = true;
             scn_gb.Visible = false;
             msr_gb.Visible = false;
             disp_gb.Visible = false;
 
+
+            //Registry init
             rkey_ptr = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\OLEforRetail\ServiceOPOS\POSPrinter").GetValueNames();
             rkey_ptrSub = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\OLEforRetail\ServiceOPOS\POSPrinter").GetSubKeyNames();
             rkey_scn = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\OLEforRetail\ServiceOPOS\Scanner").GetValueNames();
@@ -159,6 +161,8 @@ namespace OPOS_TestProject1._0
             ldn_cb.Items.AddRange(rkey_ptr);
             ldn_cb.Items.AddRange(rkey_ptrSub);
             ldn_cb.SelectedIndex = 0;
+
+
         }
 
         private void scannerMenuItem_Click(object sender, EventArgs e)
@@ -209,6 +213,11 @@ namespace OPOS_TestProject1._0
             ldn_cb.SelectedIndex = 0;
         }
 
+        private void cashMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void test_btn_Click(object sender, EventArgs e)
         {
             switch (device_num)
@@ -251,9 +260,9 @@ namespace OPOS_TestProject1._0
 
         private void repeatNum_tb_KeyPress(object sender, KeyPressEventArgs e)
         {
-            //백스페이스 허용
+            //BackSpace allowable
             if (e.KeyChar == '\b') return;
-            //숫자 이외의 값 허용 안함
+            //Don't allow a value other than number  
             if (!char.IsDigit(e.KeyChar)) e.Handled = true;
         }
 
@@ -340,20 +349,29 @@ namespace OPOS_TestProject1._0
             track2_rtb.Text = track2;
             track3_rtb.Text = track3;
 
-            string CardNum = axOPOSMSR1.AccountNumber;
-            string SurName = axOPOSMSR1.Surname;
-            string FirstName = axOPOSMSR1.FirstName;
-            string ExpirationDate = axOPOSMSR1.ExpirationDate;
+            cardNum_rtb.Text = axOPOSMSR1.AccountNumber;
+            surName_rtb.Text = axOPOSMSR1.Surname;
+            firstName_rtb.Text = axOPOSMSR1.FirstName;
+            expirationDate_rtb.Text = axOPOSMSR1.ExpirationDate;
 
-            test_rtb.Text = 
-                "CardAuthenticationData : " + axOPOSMSR1.CardAuthenticationData + "\n" +
-                "CapCardAuthentication : " + axOPOSMSR1.CapCardAuthentication + "\n" +
-                "CapDataEncryption : " + axOPOSMSR1.CapDataEncryption + "\n" +
-                "AccountNumber : " + axOPOSMSR1.AccountNumber + "\n"
-                + SurName + "\n" + FirstName + "\n" + ExpirationDate;
+
+            test_rtb.Text =
+                "CardAuthenticationData: " + axOPOSMSR1.CardAuthenticationData + "\n" +
+                "CapCardAuthentication: " + axOPOSMSR1.CapCardAuthentication + "\n" +
+                "CapDataEncryption: " + axOPOSMSR1.CapDataEncryption + "\n" +
+                "AccountNumber: " + axOPOSMSR1.AccountNumber + "\n" +
+                "CheckHealthText: " + axOPOSMSR1.CheckHealthText + "\n" +
+                "DataCount: " + axOPOSMSR1.DataCount + "\n" +
+                "PowerNotify: " + axOPOSMSR1.PowerNotify + "\n" +
+                "PowerState: " + axOPOSMSR1.PowerState + "\n" +
+                "Track1DiscretionaryData: " + axOPOSMSR1.Track1DiscretionaryData + "\n" +
+                "Track1EncryptedData: " + axOPOSMSR1.Track1EncryptedData + "\n" +
+                "Track1EncryptedDataLength: " + axOPOSMSR1.Track1EncryptedDataLength + "\n" +
+                "TracksToRead: " + axOPOSMSR1.TracksToRead + "\n" +
+                "TracksToWrite: " + axOPOSMSR1.TracksToWrite + "\n" +
+                "WriteCardType: " + axOPOSMSR1.WriteCardType + "\n";
 
             axOPOSMSR1.DataEventEnabled = true;
-
         }
 
         private void dataEventEnabled_btn_Click(object sender, EventArgs e)
@@ -407,20 +425,27 @@ namespace OPOS_TestProject1._0
 
         }
 
-        // Open, Claim, Enable Botton Click Event
+        /*  
+         * Open, Claim, Enable Botton Click Event 
+         */
         private void OCE_btn_Click(object sender, EventArgs e)
         {
+            // OPEN Button Click
             if (sender.Equals(dOpen_btn) || sender.Equals(open_btn))
             {
+                close_btn.Enabled = true;
+                dClose_btn.Enabled = true;
+                dClaim_btn.Enabled = true;
                 switch (device_num)
                 {
                     case PTR_NUM:
                         {
                             returnCode_open = axOPOSPOSPrinter1.Open(ldn_cb.Text);
-                            dClaim_btn.Enabled = true;
+                            
                             if (simpleMode_chkb.Checked)
                             {
                                 dClaim_btn.Enabled = false;
+                                dClose_btn.Enabled = false;
                                 returnCode_claim = axOPOSPOSPrinter1.ClaimDevice(500);
                                 axOPOSPOSPrinter1.DeviceEnabled = true;                                
                             }                            
@@ -429,9 +454,11 @@ namespace OPOS_TestProject1._0
                     case SCN_NUM:
                         {
                             returnCode_open = axOPOSScanner1.Open(ldn_cb.Text);
-                            dClaim_btn.Enabled = true;
+                            
                             if (simpleMode_chkb.Checked)
                             {
+                                dClaim_btn.Enabled = false;
+                                dClose_btn.Enabled = false;
                                 returnCode_claim = axOPOSScanner1.ClaimDevice(1000);                                
                                 axOPOSScanner1.DeviceEnabled = true;
                                 scandata_rtb.Clear();
@@ -441,9 +468,11 @@ namespace OPOS_TestProject1._0
                     case MSR_NUM:
                         {
                             returnCode_open = axOPOSMSR1.Open(ldn_cb.Text);                            
-                            dClaim_btn.Enabled = true;
+                            
                             if (simpleMode_chkb.Checked)
                             {
+                                dClaim_btn.Enabled = false;
+                                dClose_btn.Enabled = false;
                                 returnCode_claim = axOPOSMSR1.ClaimDevice(1000);                                
                                 axOPOSMSR1.DeviceEnabled = true;
                                 track1_rtb.Clear();
@@ -455,9 +484,11 @@ namespace OPOS_TestProject1._0
                     case CDP_NUM:
                         {
                             returnCode_open = axOPOSLineDisplay1.Open(ldn_cb.Text);                            
-                            dClaim_btn.Enabled = true;
+                            
                             if (simpleMode_chkb.Checked)
                             {
+                                dClaim_btn.Enabled = false;
+                                dClose_btn.Enabled = false;
                                 returnCode_claim = axOPOSLineDisplay1.ClaimDevice(10000);                                                           
                                 axOPOSLineDisplay1.DeviceEnabled = true;
                             }
@@ -465,6 +496,7 @@ namespace OPOS_TestProject1._0
                         break;
                     default: break;
                 }
+                
 
                 //OPEN Error Code print
                 returnCodeString = return_ErrorCode(returnCode_open);
@@ -478,6 +510,7 @@ namespace OPOS_TestProject1._0
                 }
 
             }
+            // Claim Button Click
             else if (sender.Equals(dClaim_btn))
             {
                 switch (device_num)
@@ -512,7 +545,7 @@ namespace OPOS_TestProject1._0
                 returnCodeString = return_ErrorCode(returnCode_claim);
                 returnCodeClm_rtb.Text = returnCodeString;
             }
-
+            // Enable Button Click
             else if (sender.Equals(dEnable_btn))
             {
                 switch (device_num)
@@ -554,10 +587,13 @@ namespace OPOS_TestProject1._0
                 returnCodeCls_rtb.Text = "Return Code ( )";
             }
         }
-        
-        // Disable, Release, Close Botton Click Event
+
+        /*
+         * Disable, Release, Close Botton Click Event
+         */
         private void DRC_btn_Click(object sender, EventArgs e)
         {
+            //Disable Button Click
             if (sender.Equals(dDisable_btn))
             {
                 switch (device_num)
@@ -586,7 +622,7 @@ namespace OPOS_TestProject1._0
                     default: break;
                 }
             }
-
+            //Release Button Click
             else if (sender.Equals(dRelease_btn))
             {
                 switch (device_num)
@@ -614,9 +650,10 @@ namespace OPOS_TestProject1._0
                     default: break;
                 }
             }
-
+            //Release Button Click
             else if (sender.Equals(dClose_btn) || sender.Equals(close_btn))
             {
+                close_btn.Enabled = false;
                 switch (device_num)
                 {
                     case PTR_NUM:
@@ -651,7 +688,47 @@ namespace OPOS_TestProject1._0
                 dRelease_btn.Enabled = false;
                 dClose_btn.Enabled = false;
             }
-        }        
+        }
+
+        private void axOPOSMSR1_ErrorEvent(object sender, AxOposMSR_CCO._IOPOSMSREvents_ErrorEventEvent e)
+        {
+            int res;
+            int resCE;
+            int errL;
+            string resStr;
+            string resCEStr;
+            string errLStr;
+
+
+            res = e.resultCode;
+            resCE = e.resultCodeExtended;
+            errL = e.errorLocus;
+
+            resStr = return_ErrorCode(res);
+            resCEStr = return_ErrorCode(resCE);
+            errLStr = return_ErrorCode(errL);
+
+
+            msrResultCode_rtb.Text = resStr;
+            msrRCExtended_rtb.Text = resCEStr;
+            msrErrorLocus_rtb.Text = errLStr;
+
+            MessageBox.Show("Error Event!!");
+        }
+
+        private void axOPOSScanner1_ErrorEvent(object sender, AxOposScanner_CCO._IOPOSScannerEvents_ErrorEventEvent e)
+        {
+            int res = e.resultCode;
+            string resultCode;
+            resultCode = return_ErrorCode(res);
+
+            
+        }
+
+        private void axOPOSPOSPrinter1_ErrorEvent(object sender, AxOposPOSPrinter_1_5_Lib._IOPOSPOSPrinterEvents_ErrorEventEvent e)
+        {
+
+        }
 
         private string return_ErrorCode(int returnCode)
         {
