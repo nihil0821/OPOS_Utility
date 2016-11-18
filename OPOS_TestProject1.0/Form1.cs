@@ -9,8 +9,23 @@ namespace OPOS_TestProject1._0
         //OPOS Constant
         public const int PTR_S_RECEIPT = 2;
         public const int PTR_CP_FULLCUT = 100;
-
         public const Int32 DISP_DT_NORMAL = 0;
+
+        //** "Width" Parameter
+        //     Either bitmap width or:
+
+        public const int PTR_BM_ASIS = -11;  // One pixel per printer dot
+
+        //** "Alignment" Parameter
+        //     Either the distance from the left-most print column to the start
+        //     of the bitmap, or one of the following:
+
+        public const int PTR_BM_LEFT = -1;
+        public const int PTR_BM_CENTER = -2;
+        public const int PTR_BM_RIGHT = -3;
+
+        public const string ESC = "\x1B";
+        public const int LF = 10;
 
         //OPOS Error Constant 
         public const int OPOSERR           = 100;
@@ -36,6 +51,7 @@ namespace OPOS_TestProject1._0
         public const int SCN_NUM = 2;
         public const int MSR_NUM = 3;
         public const int CDP_NUM = 4;
+        public const int CASH_NUM = 5;
 
         //Registry value store String[]
         string[] rkey_ptr;
@@ -46,6 +62,8 @@ namespace OPOS_TestProject1._0
         string[] rkey_msrSub;
         string[] rkey_cdp;
         string[] rkey_cdpSub;
+        string[] rkey_cash;
+        string[] rkey_cashSub;
         int returnCode_open;
         int returnCode_claim;
         int returnCode_release;
@@ -82,6 +100,11 @@ namespace OPOS_TestProject1._0
 
         Boolean isDefaultText = true;
 
+        //CashDrawer Test var
+        int intervalNum=1000;
+        int repeatNum=0;
+        int currentRepeatNum=0;
+
 
         public Form1()
         {
@@ -92,7 +115,7 @@ namespace OPOS_TestProject1._0
 
         private void StringToUTF8()
         {
-            string sample = "테스트";
+            //string sample = "테스트";
             //인코딩 방식을 지정
             System.Text.Encoding utf8 = System.Text.Encoding.UTF8;
             //변환하고자 하는 문자열을 UTF8 방식으로 변환하여 byte 배열로 반환
@@ -122,6 +145,7 @@ namespace OPOS_TestProject1._0
             scn_gb.Visible = false;
             msr_gb.Visible = false;
             disp_gb.Visible = false;
+            cash_gb.Visible = false;
 
 
             //Registry init
@@ -133,6 +157,8 @@ namespace OPOS_TestProject1._0
             rkey_msrSub = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\OLEforRetail\ServiceOPOS\MSR").GetSubKeyNames();
             rkey_cdp = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\OLEforRetail\ServiceOPOS\LineDisplay").GetValueNames();
             rkey_cdpSub = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\OLEforRetail\ServiceOPOS\LineDisplay").GetSubKeyNames();
+            rkey_cash = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\OLEforRetail\ServiceOPOS\CashDrawer").GetValueNames();
+            rkey_cashSub = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\OLEforRetail\ServiceOPOS\CashDrawer").GetSubKeyNames();
 
             ldn_cb.Items.AddRange(rkey_ptr);
             ldn_cb.Items.AddRange(rkey_ptrSub);
@@ -143,8 +169,13 @@ namespace OPOS_TestProject1._0
 
             simpleMode_chkb.Checked = true;
 
+            timer_gb.Enabled = false;
+
             ldn_rtb.SelectionAlignment = HorizontalAlignment.Center;
             currentDevice_rtb.SelectionAlignment = HorizontalAlignment.Center;
+
+            currentInterval_rtb.SelectionAlignment = HorizontalAlignment.Center;
+            currentRepeat_rtb.SelectionAlignment = HorizontalAlignment.Center;
 
         }
         private void printerMenuItem_Click(object sender, EventArgs e)
@@ -156,6 +187,7 @@ namespace OPOS_TestProject1._0
             scn_gb.Visible = false;
             msr_gb.Visible = false;
             disp_gb.Visible = false;
+            cash_gb.Visible = false;
 
             ldn_cb.Items.Clear();
             ldn_cb.Items.AddRange(rkey_ptr);
@@ -174,6 +206,7 @@ namespace OPOS_TestProject1._0
             scn_gb.Visible = true;
             msr_gb.Visible = false;
             disp_gb.Visible = false;
+            cash_gb.Visible = false;
 
             ldn_cb.Items.Clear();
             ldn_cb.Items.AddRange(rkey_scn);
@@ -190,6 +223,7 @@ namespace OPOS_TestProject1._0
             scn_gb.Visible = false;
             msr_gb.Visible = true;
             disp_gb.Visible = false;
+            cash_gb.Visible = false;
 
             ldn_cb.Items.Clear();
             ldn_cb.Items.AddRange(rkey_msr);
@@ -206,6 +240,7 @@ namespace OPOS_TestProject1._0
             scn_gb.Visible = false;
             msr_gb.Visible = false;
             disp_gb.Visible = true;
+            cash_gb.Visible = false;
 
             ldn_cb.Items.Clear();
             ldn_cb.Items.AddRange(rkey_cdp);
@@ -214,34 +249,40 @@ namespace OPOS_TestProject1._0
         }
 
         private void cashMenuItem_Click(object sender, EventArgs e)
-        {
+        {            
+            device_num = CASH_NUM;
+            currentDevice_rtb.Text = "Cash Drawer";
+
+            ptr_gb.Visible = false;
+            scn_gb.Visible = false;
+            msr_gb.Visible = false;
+            disp_gb.Visible = false;
+            cash_gb.Visible = true;
+
+            ldn_cb.Items.Clear();
+            ldn_cb.Items.AddRange(rkey_cash);
+            ldn_cb.Items.AddRange(rkey_cashSub);
+            ldn_cb.SelectedIndex = 0;
 
         }
 
         private void test_btn_Click(object sender, EventArgs e)
         {
-            switch (device_num)
+            int repeatNum = int.Parse(repeatNum_tb.Text);
+            if (isDefaultText)
             {
-                case PTR_NUM:
-                    {                  
-                        int repeatNum = int.Parse(repeatNum_tb.Text);
-                        if(isDefaultText)
-                        {
-                            printText = defaultReciptText;
-                        }
-                        for (int i = 0; i < repeatNum; i++)
-                        {
-                            int ret = axOPOSPOSPrinter1.PrintNormal(PTR_S_RECEIPT, printText);
-                        }
-
-                        axOPOSPOSPrinter1.CutPaper(PTR_CP_FULLCUT);
-                    }
-                    break;
-                case SCN_NUM: { } break;
-                case MSR_NUM: { } break;
-                case CDP_NUM: { } break;
-                default: break;
+                printText = defaultReciptText;
             }
+            for (int i = 0; i < repeatNum; i++)
+            {
+                int ret = axOPOSPOSPrinter1.PrintNormal(PTR_S_RECEIPT,
+                    ESC + "|cA" + printText + ESC + "|100fP");
+
+                int ret2 = axOPOSPOSPrinter1.PrintNormal(PTR_S_RECEIPT,
+                    ESC + "|1B" + "|100fP");
+            }
+
+            
         }
 
         private void openfile_btn_Click(object sender, EventArgs e)
@@ -270,6 +311,16 @@ namespace OPOS_TestProject1._0
         {
             isDefaultText = true;
             printTxt_rtb.Text = defaultReciptText;
+            string filePath = "C:\\Users\\Administrator\\Documents\\Visual Studio 2015\\Projects\\OPOS_TestProject1.0\\OPOS_TestProject1.0\resource\vip.bmp";
+
+            axOPOSPOSPrinter1.SetBitmap(1, PTR_S_RECEIPT, filePath, PTR_BM_ASIS, PTR_BM_CENTER);
+            int res = axOPOSPOSPrinter1.PrintBitmap(PTR_S_RECEIPT, filePath, PTR_BM_ASIS, PTR_BM_CENTER);
+            printTxt_rtb.Text += res;
+        }
+
+        private void papercut_btn_Click(object sender, EventArgs e)
+        {
+            axOPOSPOSPrinter1.CutPaper(PTR_CP_FULLCUT);
         }
 
         private void simpleMode_chkb_CheckStateChanged(object sender, EventArgs e)
@@ -430,161 +481,249 @@ namespace OPOS_TestProject1._0
          */
         private void OCE_btn_Click(object sender, EventArgs e)
         {
-            // OPEN Button Click
-            if (sender.Equals(dOpen_btn) || sender.Equals(open_btn))
+
+            if (sender.Equals(clearResult_btn))
             {
-                close_btn.Enabled = true;
-                dClose_btn.Enabled = true;
-                dClaim_btn.Enabled = true;
-                switch (device_num)
-                {
-                    case PTR_NUM:
-                        {
-                            returnCode_open = axOPOSPOSPrinter1.Open(ldn_cb.Text);
-                            
-                            if (simpleMode_chkb.Checked)
-                            {
-                                dClaim_btn.Enabled = false;
-                                dClose_btn.Enabled = false;
-                                returnCode_claim = axOPOSPOSPrinter1.ClaimDevice(500);
-                                axOPOSPOSPrinter1.DeviceEnabled = true;                                
-                            }                            
-                        }
-                        break;
-                    case SCN_NUM:
-                        {
-                            returnCode_open = axOPOSScanner1.Open(ldn_cb.Text);
-                            
-                            if (simpleMode_chkb.Checked)
-                            {
-                                dClaim_btn.Enabled = false;
-                                dClose_btn.Enabled = false;
-                                returnCode_claim = axOPOSScanner1.ClaimDevice(1000);                                
-                                axOPOSScanner1.DeviceEnabled = true;
-                                scandata_rtb.Clear();
-                            }
-                        }
-                        break;
-                    case MSR_NUM:
-                        {
-                            returnCode_open = axOPOSMSR1.Open(ldn_cb.Text);                            
-                            
-                            if (simpleMode_chkb.Checked)
-                            {
-                                dClaim_btn.Enabled = false;
-                                dClose_btn.Enabled = false;
-                                returnCode_claim = axOPOSMSR1.ClaimDevice(1000);                                
-                                axOPOSMSR1.DeviceEnabled = true;
-                                track1_rtb.Clear();
-                                track2_rtb.Clear();
-                                track3_rtb.Clear();
-                            }
-                        }
-                        break;
-                    case CDP_NUM:
-                        {
-                            returnCode_open = axOPOSLineDisplay1.Open(ldn_cb.Text);                            
-                            
-                            if (simpleMode_chkb.Checked)
-                            {
-                                dClaim_btn.Enabled = false;
-                                dClose_btn.Enabled = false;
-                                returnCode_claim = axOPOSLineDisplay1.ClaimDevice(10000);                                                           
-                                axOPOSLineDisplay1.DeviceEnabled = true;
-                            }
-                        }
-                        break;
-                    default: break;
-                }
-                
-
-                //OPEN Error Code print
-                returnCodeString = return_ErrorCode(returnCode_open);
-                returnCodeOpn_rtb.Text = returnCodeString;
-
-                //Claim Error Code print
-                if (simpleMode_chkb.Checked)
-                {                    
-                    returnCodeString = return_ErrorCode(returnCode_claim);
-                    returnCodeClm_rtb.Text = returnCodeString;
-                }
-
-            }
-            // Claim Button Click
-            else if (sender.Equals(dClaim_btn))
-            {
-                switch (device_num)
-                {
-                    case PTR_NUM:
-                        {
-                            returnCode_claim = axOPOSPOSPrinter1.ClaimDevice(500);
-                        }
-                        break;
-                    case SCN_NUM:
-                        {
-                            returnCode_claim = axOPOSScanner1.ClaimDevice(1000);
-                        }
-                        break;
-                    case MSR_NUM:
-                        {
-                            returnCode_claim = axOPOSMSR1.ClaimDevice(1000);
-                        }
-                        break;
-                    case CDP_NUM:
-                        {
-                            returnCode_claim = axOPOSLineDisplay1.ClaimDevice(10000);
-                        }
-                        break;
-                    default: break;
-                }
-                dEnable_btn.Enabled = true;
-                dDisable_btn.Enabled = true;
-                dRelease_btn.Enabled = true;
-                dClose_btn.Enabled = true;
-
-                returnCodeString = return_ErrorCode(returnCode_claim);
-                returnCodeClm_rtb.Text = returnCodeString;
-            }
-            // Enable Button Click
-            else if (sender.Equals(dEnable_btn))
-            {
-                switch (device_num)
-                {
-                    case PTR_NUM:
-                        {
-                            axOPOSPOSPrinter1.DeviceEnabled = true;                            
-                           
-                        }
-                        break;
-                    case SCN_NUM:
-                        {
-                            axOPOSScanner1.DeviceEnabled = true;
-                            scandata_rtb.Clear();
-                        }
-                        break;
-                    case MSR_NUM:
-                        {
-                            axOPOSMSR1.DeviceEnabled = true;
-                            track1_rtb.Clear();
-                            track2_rtb.Clear();
-                            track3_rtb.Clear();
-                        }
-                        break;
-                    case CDP_NUM:
-                        {
-                            axOPOSLineDisplay1.DeviceEnabled = true;
-                        }
-                        break;
-                    default: break;
-                }
-            }
-            else {
                 returnCodeOpn_rtb.Text = "Return Code ( )";
                 returnCodeClm_rtb.Text = "Return Code ( )";
                 returnCodeEnable_rtb.Text = "Return Code ( )";
                 returnCodeDis_rtb.Text = "Return Code ( )";
                 returnCodeRel_rtb.Text = "Return Code ( )";
                 returnCodeCls_rtb.Text = "Return Code ( )";
+            }  
+
+            switch (device_num)
+            {
+                case PTR_NUM:
+                    {
+                        if (sender.Equals(dOpen_btn) || sender.Equals(open_btn))
+                        {   
+                            returnCode_open = axOPOSPOSPrinter1.Open(ldn_cb.Text);
+                            close_btn.Enabled = true;
+
+                            if (simpleMode_chkb.Checked)
+                            {
+                                dClaim_btn.Enabled = false;
+                                dClose_btn.Enabled = false;
+                                returnCode_claim = axOPOSPOSPrinter1.ClaimDevice(500);
+                                axOPOSPOSPrinter1.DeviceEnabled = true;
+
+                                returnCodeString = return_ErrorCode(returnCode_claim);
+                                returnCodeClm_rtb.Text = returnCodeString;
+                            }
+                            else
+                            {                                
+                                dClose_btn.Enabled = true;
+                                dClaim_btn.Enabled = true;
+                            }   
+                            returnCodeString = return_ErrorCode(returnCode_open);
+                            returnCodeOpn_rtb.Text = returnCodeString;
+                            break;
+                        }
+                        if(sender.Equals(dClaim_btn))
+                        {
+                            returnCode_claim = axOPOSPOSPrinter1.ClaimDevice(500);
+
+                            dEnable_btn.Enabled = true;
+                            dDisable_btn.Enabled = true;
+                            dRelease_btn.Enabled = true;
+                            dClose_btn.Enabled = true;
+
+                            returnCodeString = return_ErrorCode(returnCode_claim);
+                            returnCodeClm_rtb.Text = returnCodeString;
+                            break;
+                        }
+                        if(sender.Equals(dEnable_btn))
+                        {
+                            axOPOSPOSPrinter1.DeviceEnabled = true;
+                            break;
+                        }
+                    }
+                    break;
+                case SCN_NUM:
+                    {
+                        if (sender.Equals(dOpen_btn) || sender.Equals(open_btn))
+                        {
+                            returnCode_open = axOPOSScanner1.Open(ldn_cb.Text);
+                            close_btn.Enabled = true;
+
+                            if (simpleMode_chkb.Checked)
+                            {
+                                dClaim_btn.Enabled = false;
+                                dClose_btn.Enabled = false;
+                                returnCode_claim = axOPOSScanner1.ClaimDevice(1000);
+                                axOPOSScanner1.DeviceEnabled = true;
+                                scandata_rtb.Clear();
+
+                                returnCodeString = return_ErrorCode(returnCode_claim);
+                                returnCodeClm_rtb.Text = returnCodeString;
+                            }
+                            else
+                            {                                
+                                dClose_btn.Enabled = true;
+                                dClaim_btn.Enabled = true;
+                            }
+
+                            returnCodeString = return_ErrorCode(returnCode_open);
+                            returnCodeOpn_rtb.Text = returnCodeString;
+                            break;
+                        }
+                        if (sender.Equals(dClaim_btn))
+                        {
+                            returnCode_claim = axOPOSScanner1.ClaimDevice(1000);
+
+                            dEnable_btn.Enabled = true;
+                            dDisable_btn.Enabled = true;
+                            dRelease_btn.Enabled = true;
+                            dClose_btn.Enabled = true;
+
+                            returnCodeString = return_ErrorCode(returnCode_claim);
+                            returnCodeClm_rtb.Text = returnCodeString;
+                            break;
+                        }
+                        if (sender.Equals(dEnable_btn))
+                        {
+                            axOPOSScanner1.DeviceEnabled = true;
+                            scandata_rtb.Clear();
+                            break;
+                        }
+                    }
+                    break;
+                case MSR_NUM:
+                    {
+                        if (sender.Equals(dOpen_btn) || sender.Equals(open_btn))
+                        {                            
+                            returnCode_open = axOPOSMSR1.Open(ldn_cb.Text);
+                            close_btn.Enabled = true;
+
+                            if (simpleMode_chkb.Checked)
+                            {
+                                dClaim_btn.Enabled = false;
+                                dClose_btn.Enabled = false;
+                                returnCode_claim = axOPOSMSR1.ClaimDevice(1000);
+                                axOPOSMSR1.DeviceEnabled = true;
+                                track1_rtb.Clear();
+                                track2_rtb.Clear();
+                                track3_rtb.Clear();
+
+                                returnCodeString = return_ErrorCode(returnCode_claim);
+                                returnCodeClm_rtb.Text = returnCodeString;
+                            }
+
+                            else
+                            {
+                                dClose_btn.Enabled = true;
+                                dClaim_btn.Enabled = true;
+                            }
+
+                            returnCodeString = return_ErrorCode(returnCode_open);
+                            returnCodeOpn_rtb.Text = returnCodeString;
+                            break;
+                        }
+                        if (sender.Equals(dClaim_btn))
+                        {
+                            returnCode_claim = axOPOSMSR1.ClaimDevice(1000);
+
+                            dEnable_btn.Enabled = true;
+                            dDisable_btn.Enabled = true;
+                            dRelease_btn.Enabled = true;
+                            dClose_btn.Enabled = true;
+
+                            returnCodeString = return_ErrorCode(returnCode_claim);
+                            returnCodeClm_rtb.Text = returnCodeString;
+                            break;
+                        }
+                        if (sender.Equals(dEnable_btn))
+                        {
+                            axOPOSMSR1.DeviceEnabled = true;
+                            track1_rtb.Clear();
+                            track2_rtb.Clear();
+                            track3_rtb.Clear();
+                            break;
+                        }
+                    }
+                    break;
+                case CDP_NUM:
+                    {
+                        if (sender.Equals(dOpen_btn) || sender.Equals(open_btn))
+                        {
+                            returnCode_open = axOPOSLineDisplay1.Open(ldn_cb.Text);
+                            close_btn.Enabled = true;
+                            if (simpleMode_chkb.Checked)
+                            {
+                                dClaim_btn.Enabled = false;
+                                dClose_btn.Enabled = false;
+                                returnCode_claim = axOPOSLineDisplay1.ClaimDevice(500);
+                                axOPOSLineDisplay1.DeviceEnabled = true;
+                            }
+                            else
+                            {
+                                dClose_btn.Enabled = true;
+                                dClaim_btn.Enabled = true;
+                            }
+                            break;
+                        }
+                        if (sender.Equals(dClaim_btn))
+                        {
+                            returnCode_claim = axOPOSLineDisplay1.ClaimDevice(500);
+
+                            dEnable_btn.Enabled = true;
+                            dDisable_btn.Enabled = true;
+                            dRelease_btn.Enabled = true;
+                            dClose_btn.Enabled = true;
+
+                            returnCodeString = return_ErrorCode(returnCode_claim);
+                            returnCodeClm_rtb.Text = returnCodeString;
+                            break;
+                        }
+                        if (sender.Equals(dEnable_btn))
+                        {
+                            axOPOSLineDisplay1.DeviceEnabled = true;
+                            break;
+                        }
+                    }
+                    break;
+                case CASH_NUM:
+                    {
+                        if (sender.Equals(dOpen_btn) || sender.Equals(open_btn))
+                        {
+                            returnCode_open = axOPOSCashDrawer1.Open(ldn_cb.Text);
+                            close_btn.Enabled = true;
+                            if (simpleMode_chkb.Checked)
+                            {
+                                dClaim_btn.Enabled = false;
+                                dClose_btn.Enabled = false;
+                                returnCode_claim = axOPOSCashDrawer1.ClaimDevice(500);
+                                axOPOSCashDrawer1.DeviceEnabled = true;
+                            }
+                            else
+                            {
+                                dClose_btn.Enabled = true;
+                                dClaim_btn.Enabled = true;
+                            }
+                            break;
+                        }
+                        if (sender.Equals(dClaim_btn))
+                        {
+                            returnCode_claim = axOPOSCashDrawer1.ClaimDevice(500);
+
+                            dEnable_btn.Enabled = true;
+                            dDisable_btn.Enabled = true;
+                            dRelease_btn.Enabled = true;
+                            dClose_btn.Enabled = true;
+
+                            returnCodeString = return_ErrorCode(returnCode_claim);
+                            returnCodeClm_rtb.Text = returnCodeString;
+                            break;
+                        }
+                        if (sender.Equals(dEnable_btn))
+                        {
+                            axOPOSCashDrawer1.DeviceEnabled = true;
+                            break;
+                        }
+                    }
+                    break;
+                default: break;
             }
         }
 
@@ -617,6 +756,11 @@ namespace OPOS_TestProject1._0
                         {
                             axOPOSLineDisplay1.ClearText();
                             axOPOSLineDisplay1.DeviceEnabled = false;
+                        }
+                        break;
+                    case CASH_NUM:
+                        {
+                            axOPOSCashDrawer1.DeviceEnabled = false;
                         }
                         break;
                     default: break;
@@ -723,6 +867,102 @@ namespace OPOS_TestProject1._0
             resultCode = return_ErrorCode(res);
 
             
+        }
+
+        private void openDrawer_btn_Click(object sender, EventArgs e)
+        {
+            if (timerMode_cb.Checked)
+            {
+                if (currentRepeatNum > 0)
+                {
+
+                    int res = axOPOSCashDrawer1.OpenDrawer();
+                    currentRepeatNum--;
+                    currentRepeat_rtb.Text = currentRepeatNum + "";
+
+                }
+                else
+                {
+                    timerStop_btn.Enabled = false;
+                    timerMode_cb.Enabled = true;
+                    currentRepeatNum = repeatNum;
+                    cashTimer.Enabled = false;
+                }
+            }
+            else
+            {
+                int res = axOPOSCashDrawer1.OpenDrawer();
+            }
+        }
+
+        private void interRepet_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //BackSpace allowable
+            if (e.KeyChar == '\b') return;
+            //Don't allow a value other than number  
+            if (!char.IsDigit(e.KeyChar)) e.Handled = true;
+
+            if (Convert.ToInt32(e.KeyChar) == 13)                
+            {
+                if (sender.Equals(interval_rtb))
+                {
+                    MessageBox.Show("Enter Key pressed1");
+                    if(!interval_rtb.Text.Equals("")) // 공백이 아닐 때만
+                    {
+                        intervalNum = int.Parse(interval_rtb.Text);
+                        currentInterval_rtb.Text = interval_rtb.Text;
+                        interval_rtb.Clear();
+                    }
+                    else //공백일 시 디폴트로 설정
+                    {
+                        intervalNum = 1000;
+                        currentInterval_rtb.Text = 1000 + "";
+                    }                    
+                }
+                else
+                {
+                    MessageBox.Show("Enter Key pressed2");
+                    
+                    if (!repeatNum_rtb.Text.Equals("")) // 공백이 아닐 때만
+                    {
+                        repeatNum = int.Parse(repeatNum_rtb.Text);
+                        currentRepeat_rtb.Text = repeatNum_rtb.Text;
+                        currentRepeatNum = repeatNum;
+                    }
+                    else //공백일 시 디폴트로 설정
+                    {
+                        repeatNum = 1;
+                        currentRepeat_rtb.Text = 1 + "";
+                    }
+                }
+            }
+        }        
+
+        private void timerMode_cb_CheckedChanged(object sender, EventArgs e)
+        {
+            if(timerMode_cb.Checked)
+            {
+                timer_gb.Enabled = true;
+            }
+            else
+            {
+                timer_gb.Enabled = false;
+            }
+        }
+
+        private void timerStart_btn_Click(object sender, EventArgs e)
+        {
+            cashTimer.Enabled = true;
+            cashTimer.Interval = intervalNum;
+            timerStop_btn.Enabled = true;
+            timerMode_cb.Enabled = false;
+        }
+
+        private void timerStop_btn_Click(object sender, EventArgs e)
+        {
+            cashTimer.Enabled = false;
+            timerStop_btn.Enabled = false;
+            timerMode_cb.Enabled = true;
         }
 
         private void axOPOSPOSPrinter1_ErrorEvent(object sender, AxOposPOSPrinter_1_5_Lib._IOPOSPOSPrinterEvents_ErrorEventEvent e)
